@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ContaEntity } from '../../entities/conta.entity';
 import { OcorrenciasService } from '../ocorrencias/ocorrencias.service';
+import { parseFaturaNeoenergia } from './parsers/neoenergia.parser';
 
 @Injectable()
 export class ContasService {
@@ -74,5 +75,46 @@ export class ContasService {
   async remove(id: number): Promise<void> {
     await this.repo.update(id, { snAtivo: 'N' });
     await this.ocorrenciasService.removePendingForOrigem('CONTA', id);
+  }
+
+  async createFromFaturaPdfNeoenergia(texto: string): Promise<ContaEntity> {
+    const fatura = parseFaturaNeoenergia(texto);
+
+    const nmConta = fatura.referenciaMesAno
+      ? `Energia Elétrica - Neoenergia Coelba (${fatura.referenciaMesAno})`
+      : `Energia Elétrica - Neoenergia Coelba (venc. ${fatura.vencimento})`;
+
+    const dsObservacao = [
+      fatura.codigoCliente ? `Código do cliente: ${fatura.codigoCliente}` : null,
+      fatura.linhaDigitavel ? `Linha digitável: ${fatura.linhaDigitavel}` : null,
+      `Vencimento: ${fatura.vencimento}`,
+    ]
+      .filter(Boolean)
+      .join(' • ');
+
+    const dia = Number(fatura.vencimento.split('-')[2]);
+
+    const existente = await this.repo.findOne({
+      where: { nmConta, snAtivo: 'S' },
+    });
+
+    const dto: Partial<ContaEntity> = {
+      nmConta,
+      vlValor: fatura.valor,
+      snRecorrente: 'S',
+      snFixo: 'N',
+      dsFrequencia: 'MENSAL',
+      nrDiaVencimento: dia,
+      dtVencimentoInicial: fatura.vencimento,
+      nrDiasAviso: 3,
+      snAvisoAtivo: 'S',
+      snAtivo: 'S',
+      dsObservacao,
+    };
+
+    if (existente) {
+      return this.update(existente.cdConta, dto) as Promise<ContaEntity>;
+    }
+    return this.create(dto);
   }
 }

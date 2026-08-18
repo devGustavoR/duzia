@@ -37,6 +37,35 @@ export async function fetchApi<T>(
   return JSON.parse(text) as T;
 }
 
+export async function uploadFaturaNeoenergia(file: File): Promise<Conta> {
+  const supabase = createClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const authHeaders: Record<string, string> = {};
+  if (session?.access_token) {
+    authHeaders['Authorization'] = `Bearer ${session.access_token}`;
+  }
+
+  const formData = new FormData();
+  formData.append('arquivo', file);
+
+  const res = await fetch(`${API_BASE_URL}/contas/upload-fatura/neoenergia`, {
+    method: 'POST',
+    headers: authHeaders,
+    body: formData,
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    const errorBody = await res.text();
+    throw new Error(`API Error [${res.status}]: ${errorBody}`);
+  }
+
+  return res.json() as Promise<Conta>;
+}
+
 // Data Interfaces
 export interface Categoria {
   cdCategoria: number;

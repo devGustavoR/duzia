@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Header } from '@/components/layout/header';
 import { PagamentoModal } from '@/components/pagamento-modal';
-import { fetchApi, Conta, Categoria, Ocorrencia } from '@/lib/api';
+import { fetchApi, uploadFaturaNeoenergia, Conta, Categoria, Ocorrencia } from '@/lib/api';
 import { formatCurrency, formatDateBR } from '@/lib/utils';
 import {
   Plus,
@@ -19,6 +19,8 @@ import {
   HeartHandshake,
   Repeat,
   FileCheck,
+  Upload,
+  Loader2,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -32,6 +34,8 @@ export default function ContasPage() {
   const [editingItem, setEditingItem] = useState<Partial<Conta> | null>(null);
   const [saving, setSaving] = useState(false);
   const [selectedOcForPayment, setSelectedOcForPayment] = useState<Ocorrencia | null>(null);
+  const [uploadingFatura, setUploadingFatura] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const loadData = async () => {
     try {
@@ -101,6 +105,23 @@ export default function ContasPage() {
     }
   };
 
+  const handleUploadFatura = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+
+    setUploadingFatura(true);
+    try {
+      const conta = await uploadFaturaNeoenergia(file);
+      toast.success(`Fatura importada: ${conta.nmConta} — ${formatCurrency(conta.vlValor)}`);
+      loadData();
+    } catch (err) {
+      toast.error('Não foi possível ler os dados dessa fatura.');
+    } finally {
+      setUploadingFatura(false);
+    }
+  };
+
   const handleDelete = async (id: number) => {
     if (!confirm('Deseja excluir esta conta?')) return;
     try {
@@ -150,26 +171,49 @@ export default function ContasPage() {
           </div>
         </div>
 
-        <button
-          onClick={() => {
-            const todayISO = new Date().toISOString().split('T')[0];
-            setEditingItem({
-              snRecorrente: 'S',
-              snFixo: 'S',
-              dsFrequencia: 'MENSAL',
-              snTerceiros: 'N',
-              snReembolsado: 'S',
-              nrDiaVencimento: 5,
-              dtVencimentoInicial: todayISO,
-              nrDiasAviso: 3,
-              snAvisoAtivo: 'S',
-            });
-            setModalOpen(true);
-          }}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ea2a33] hover:bg-[#d4222a] text-white text-xs font-bold shadow-lg shadow-[#ea2a33]/25 transition-all"
-        >
-          <Plus className="h-4 w-4" /> Cadastrar Nova Conta
-        </button>
+        <div className="flex items-center gap-2">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="application/pdf"
+            className="hidden"
+            onChange={handleUploadFatura}
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={uploadingFatura}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            title="Importar fatura em PDF (Neoenergia Coelba)"
+          >
+            {uploadingFatura ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingFatura ? 'Lendo fatura...' : 'Importar Fatura (PDF)'}
+          </button>
+
+          <button
+            onClick={() => {
+              const todayISO = new Date().toISOString().split('T')[0];
+              setEditingItem({
+                snRecorrente: 'S',
+                snFixo: 'S',
+                dsFrequencia: 'MENSAL',
+                snTerceiros: 'N',
+                snReembolsado: 'S',
+                nrDiaVencimento: 5,
+                dtVencimentoInicial: todayISO,
+                nrDiasAviso: 3,
+                snAvisoAtivo: 'S',
+              });
+              setModalOpen(true);
+            }}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ea2a33] hover:bg-[#d4222a] text-white text-xs font-bold shadow-lg shadow-[#ea2a33]/25 transition-all"
+          >
+            <Plus className="h-4 w-4" /> Cadastrar Nova Conta
+          </button>
+        </div>
       </div>
 
       {/* Grid de Contas */}

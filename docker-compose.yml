@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: ./back-end
+    image: duzia-backend:latest
+    container_name: duzia-backend
+    restart: unless-stopped
+    env_file:
+      - ./back-end/.env
+    ports:
+      - "127.0.0.1:3011:3001"
+
+  frontend:
+    build:
+      context: ./front-end
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    image: duzia-frontend:latest
+    container_name: duzia-frontend
+    restart: unless-stopped
+    env_file:
+      - ./front-end/.env
+    ports:
+      - "127.0.0.1:3010:3000"
+    depends_on:
+      - backend

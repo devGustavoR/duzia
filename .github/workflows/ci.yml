@@ -21,7 +21,10 @@ jobs:
           cache: npm
           cache-dependency-path: back-end/package-lock.json
 
-      - run: npm ci
+      # npm install (not ci): the lockfile can drift on cross-platform optional
+      # deps (@emnapi/* under *-wasm32-wasi packages) when regenerated off-Linux.
+      # The deploy Dockerfiles also use npm install, so CI matches them.
+      - run: npm install --no-audit --no-fund
       - run: npm run lint
         continue-on-error: true
       - run: npm run build
@@ -40,7 +43,7 @@ jobs:
           cache: npm
           cache-dependency-path: front-end/package-lock.json
 
-      - run: npm ci
+      - run: npm install --no-audit --no-fund
       - run: npm run lint
         continue-on-error: true
       - run: npm run build

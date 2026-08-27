@@ -3,22 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
 import { Client } from 'pg';
-import { CategoriaEntity } from '../../entities/categoria.entity';
-import { ContaEntity } from '../../entities/conta.entity';
-import { AssinaturaEntity } from '../../entities/assinatura.entity';
-import { MetaCompraEntity } from '../../entities/meta-compra.entity';
-import { OcorrenciaEntity } from '../../entities/ocorrencia.entity';
-import { AvisoEnviadoEntity } from '../../entities/aviso-enviado.entity';
-import { DividaEntity } from '../../entities/divida.entity';
-import { PerfilFinanceiroEntity } from '../../entities/perfil-financeiro.entity';
-import { FaculdadeEntity } from '../../entities/faculdade.entity';
-import { AcademiaEntity } from '../../entities/academia.entity';
-import { CartaoEntity } from '../../entities/cartao.entity';
-import { CartaoCreditoEntity } from '../../entities/cartao-credito.entity';
-import { CartaoCreditoCompraEntity } from '../../entities/cartao-credito-compra.entity';
-import { PixParceladoEntity } from '../../entities/pix-parcelado.entity';
-import { EventoEntity } from '../../entities/evento.entity';
-import { EventoItemEntity } from '../../entities/evento-item.entity';
+import { entities } from '../../entities';
 
 async function ensureDatabaseExists(configService: ConfigService) {
   const dbUrl = configService.get<string>('DATABASE_URL');
@@ -92,25 +77,10 @@ async function ensureDatabaseExists(configService: ConfigService) {
             type: 'postgres',
             url: dbUrl,
             ssl: isSupabase ? { rejectUnauthorized: false } : false,
-            entities: [
-              CategoriaEntity,
-              ContaEntity,
-              AssinaturaEntity,
-              MetaCompraEntity,
-              OcorrenciaEntity,
-              AvisoEnviadoEntity,
-              DividaEntity,
-              PerfilFinanceiroEntity,
-              FaculdadeEntity,
-              AcademiaEntity,
-              CartaoEntity,
-              CartaoCreditoEntity,
-              CartaoCreditoCompraEntity,
-              PixParceladoEntity,
-              EventoEntity,
-              EventoItemEntity,
-            ],
-            synchronize: true,
+            entities,
+            // Schema is owned by migrations (npm run migration:run), not by
+            // synchronize. The deploy runs migrations before starting the app.
+            synchronize: false,
             logging: false,
           };
         }
@@ -121,22 +91,8 @@ async function ensureDatabaseExists(configService: ConfigService) {
           username: configService.get<string>('DB_USER', 'postgres'),
           password: configService.get<string>('DB_PASSWORD', 'postgres'),
           database: configService.get<string>('DB_NAME', 'duzia'),
-          entities: [
-            CategoriaEntity,
-            ContaEntity,
-            AssinaturaEntity,
-            MetaCompraEntity,
-            OcorrenciaEntity,
-            AvisoEnviadoEntity,
-            DividaEntity,
-            PerfilFinanceiroEntity,
-            FaculdadeEntity,
-            AcademiaEntity,
-            CartaoEntity,
-            CartaoCreditoEntity,
-            CartaoCreditoCompraEntity,
-          ],
-          synchronize: true,
+          entities,
+          synchronize: false,
           logging: false,
         };
       },

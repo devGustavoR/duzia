@@ -17,6 +17,7 @@ import { AcademiaModule } from './modules/academia/academia.module';
 import { CartaoModule } from './modules/cartao/cartao.module';
 import { CartaoCreditoModule } from './modules/cartao-credito/cartao-credito.module';
 import { PixParceladoModule } from './modules/pix-parcelado/pix-parcelado.module';
+import { EventosModule } from './modules/eventos/eventos.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { PixParceladoModule } from './modules/pix-parcelado/pix-parcelado.module
     CartaoModule,
     CartaoCreditoModule,
     PixParceladoModule,
+    EventosModule,
   ],
 })
 export class AppModule {}

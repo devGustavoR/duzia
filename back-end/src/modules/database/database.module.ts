@@ -17,6 +17,8 @@ import { CartaoEntity } from '../../entities/cartao.entity';
 import { CartaoCreditoEntity } from '../../entities/cartao-credito.entity';
 import { CartaoCreditoCompraEntity } from '../../entities/cartao-credito-compra.entity';
 import { PixParceladoEntity } from '../../entities/pix-parcelado.entity';
+import { EventoEntity } from '../../entities/evento.entity';
+import { EventoItemEntity } from '../../entities/evento-item.entity';
 
 async function ensureDatabaseExists(configService: ConfigService) {
   const dbUrl = configService.get<string>('DATABASE_URL');
@@ -105,6 +107,8 @@ async function ensureDatabaseExists(configService: ConfigService) {
               CartaoCreditoEntity,
               CartaoCreditoCompraEntity,
               PixParceladoEntity,
+              EventoEntity,
+              EventoItemEntity,
             ],
             synchronize: true,
             logging: false,

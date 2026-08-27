@@ -285,6 +285,54 @@ export interface PixParceladoResumo {
   compras: PixParcelado[];
 }
 
+export interface EventoItem {
+  cdItem: number;
+  cdEvento: number;
+  dsItem: string;
+  nmCategoria?: string;
+  vlEstimado: number;
+  vlReal?: number | null;
+  dtPrevista?: string | null;
+  snStatus: 'PLANEJADO' | 'COMPRADO' | 'PAGO';
+  snReembolsavel: 'S' | 'N';
+  dsComprovanteUrl?: string | null;
+}
+
+export interface Evento {
+  cdEvento: number;
+  nmEvento: string;
+  dtEvento: string;
+  dsObservacao?: string | null;
+  snAtivo: 'S' | 'N';
+  itens?: EventoItem[];
+}
+
+export interface EventoProjecao {
+  evento: Evento;
+  diasRestantes: number;
+  referenciaMes: { mes: number; ano: number };
+  rendaMensalEstimada: number;
+  gastosFixosMes: number;
+  parcelasMes: number;
+  parcelasPix: number;
+  parcelasDividas: number;
+  sobraDoMes: number;
+  custoEventoTotal: number;
+  custoEventoPago: number;
+  custoEventoRestante: number;
+  reembolsavelPendente: number;
+  folgaAposEvento: number;
+  gastosAntesDoEvento: number;
+  timeline: Array<{
+    data: string;
+    gastoEvento: number;
+    gastoContas: number;
+    total: number;
+    acumulado: number;
+  }>;
+  premissas: string;
+}
+
 export interface DashboardData {
   mes: number;
   ano: number;

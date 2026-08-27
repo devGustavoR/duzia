@@ -24,7 +24,7 @@ export class EventoItemEntity {
   @Column({ name: 'ds_item', length: 100 })
   dsItem: string; // Ex: Flores, Unhas dela, Roupa
 
-  @Column({ name: 'nm_categoria', length: 50, nullable: true })
+  @Column({ name: 'nm_categoria', type: 'varchar', length: 50, nullable: true })
   nmCategoria: string | null;
 
   @Column({ name: 'vl_estimado', type: 'numeric', precision: 12, scale: 2, default: 0 })

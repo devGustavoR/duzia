@@ -21,6 +21,7 @@ import {
   Dumbbell,
   Bus,
   Server,
+  Landmark,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -36,6 +37,7 @@ const navItems = [
   { name: 'Academia & Saúde', href: '/academia', icon: Dumbbell },
   { name: 'Faculdade', href: '/faculdade', icon: GraduationCap },
   { name: 'Dívidas', href: '/dividas', icon: Receipt },
+  { name: 'Pix Parcelado', href: '/pix-parcelado', icon: Landmark },
   { name: 'Simulador', href: '/simulador', icon: Calculator },
   { name: 'Metas', href: '/metas', icon: Target },
   { name: 'Avisos WhatsApp', href: '/avisos', icon: Bell },

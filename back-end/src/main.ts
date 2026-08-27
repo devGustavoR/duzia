@@ -1,12 +1,18 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { setDefaultResultOrder } from 'node:dns';
+import { json, urlencoded } from 'express';
 import { AppModule } from './app.module';
 
 setDefaultResultOrder('ipv4first');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Comprovantes (PIX / recibos) são enviados como base64 no corpo JSON.
+  // O limite padrão do Express (100kb) rejeita qualquer anexo real.
+  app.use(json({ limit: '15mb' }));
+  app.use(urlencoded({ extended: true, limit: '15mb' }));
 
   const allowedOrigins = process.env.FRONTEND_URL
     ? process.env.FRONTEND_URL.split(',').map((origin) => origin.trim())

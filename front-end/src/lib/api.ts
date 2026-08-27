@@ -255,6 +255,36 @@ export interface AnaliseQuitacao {
   todasDividas: Divida[];
 }
 
+export interface PixParcelado {
+  cdPixParcelado: number;
+  nmDescricao: string;
+  dsEstabelecimento?: string;
+  nmBanco?: string;
+  vlTotalCompra: number;
+  vlParcela: number;
+  taxaJurosMensal: number;
+  vlTotalComJuros: number;
+  nrParcelasTotais: number;
+  nrParcelasPagas: number;
+  nrDiaVencimento: number;
+  dtPrimeiraParcela?: string;
+  dsComprovanteUrl?: string;
+  snQuitada: 'S' | 'N';
+  snAtivo: 'S' | 'N';
+}
+
+export interface PixParceladoResumo {
+  resumo: {
+    qtdComprasAtivas: number;
+    qtdEmAberto: number;
+    vlTotalParcelado: number;
+    vlRestante: number;
+    vlParcelaMensal: number;
+    vlJurosTotal: number;
+  };
+  compras: PixParcelado[];
+}
+
 export interface DashboardData {
   mes: number;
   ano: number;

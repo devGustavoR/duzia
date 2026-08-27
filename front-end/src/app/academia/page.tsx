@@ -77,10 +77,25 @@ export default function AcademiaPage() {
 
   const ac = data?.academia;
 
-  // Localiza a ocorrência do Personal Trainer
-  const personalOc = data?.ocorrencias.find(
-    (o) => o.nmItem.toLowerCase().includes('personal') || o.nmItem.includes(ac?.nmPersonal || ''),
+  // Localiza a ocorrência do Personal Trainer.
+  // A lista traz vários meses (ordenados ASC), então priorizamos o mês atual,
+  // depois a primeira pendente, e só então a mais antiga.
+  const personalOcs = (data?.ocorrencias || []).filter(
+    (o) =>
+      o.nmItem.toLowerCase().includes('personal') ||
+      (ac?.nmPersonal ? o.nmItem.includes(ac.nmPersonal) : false),
   );
+  const hoje = new Date();
+  const personalOc =
+    personalOcs.find((o) => {
+      const d = new Date(o.dtVencimento);
+      return (
+        d.getUTCMonth() === hoje.getMonth() &&
+        d.getUTCFullYear() === hoje.getFullYear()
+      );
+    }) ||
+    personalOcs.find((o) => o.snPago === 'N') ||
+    personalOcs[0];
 
   return (
     <div>

@@ -38,6 +38,12 @@ Duzia é uma plataforma pessoal de controle financeiro que centraliza receitas, 
 
 ---
 
+## 📸 Preview
+
+![Dashboard Duzia](./docs/dashboard.png)
+
+---
+
 ## ✨ Funcionalidades
 
 - 🔐 Autenticação com JWT + refresh token

@@ -68,24 +68,29 @@ export function Header({
   };
 
   return (
-    <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-white/10">
-      <div>
+    <header
+      className={`${
+        onMonthChange ? 'flex' : 'hidden md:flex'
+      } flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-4 mb-4 sm:pb-6 sm:mb-6 sm:border-b sm:border-white/10`}
+    >
+      {/* Title block: the mobile app bar already shows the screen name */}
+      <div className="hidden md:block">
         <h1 className="text-2xl font-black text-white tracking-tight">{title}</h1>
         {subtitle && <p className="text-sm text-[#94a3b8] mt-0.5">{subtitle}</p>}
       </div>
 
       {onMonthChange && (
-        <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-1.5 shadow-sm">
+        <div className="flex items-center justify-between gap-2 bg-white/5 border border-white/10 rounded-xl px-2 py-2 sm:px-3 sm:py-1.5 shadow-sm w-full sm:w-auto">
           <button
             onClick={handlePrevMonth}
-            className="text-slate-400 hover:text-white transition-colors px-1 text-sm font-bold"
+            className="text-slate-300 hover:text-white transition-colors h-9 w-9 sm:h-auto sm:w-auto grid place-items-center rounded-lg text-lg sm:text-sm font-bold"
             title="Mês Anterior"
           >
             ‹
           </button>
 
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-200">
-            <Calendar className="h-3.5 w-3.5 text-[#ea2a33]" />
+          <div className="flex items-center gap-1.5 text-sm sm:text-xs font-semibold text-slate-200">
+            <Calendar className="h-4 w-4 sm:h-3.5 sm:w-3.5 text-[#ea2a33]" />
             <select
               value={currentMonth}
               onChange={(e) => onMonthChange(parseInt(e.target.value, 10), currentYear)}
@@ -102,7 +107,7 @@ export function Header({
 
           <button
             onClick={handleNextMonth}
-            className="text-slate-400 hover:text-white transition-colors px-1 text-sm font-bold"
+            className="text-slate-300 hover:text-white transition-colors h-9 w-9 sm:h-auto sm:w-auto grid place-items-center rounded-lg text-lg sm:text-sm font-bold"
             title="Próximo Mês"
           >
             ›

@@ -135,12 +135,12 @@ export default function DividasPage() {
       />
 
       {/* KPI & Comprometimento de Renda Banner */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5 mb-6 sm:mb-8">
         <div className="glass-card p-5 rounded-2xl border border-white/10">
           <span className="text-xs font-semibold uppercase text-[#94a3b8]">
             Saldo Devedor Acumulado
           </span>
-          <p className="text-2xl font-black text-rose-400 mt-2">
+          <p className="text-xl sm:text-2xl font-black text-rose-400 mt-2">
             {formatCurrency(analise?.resumo.totalSaldoDevedor || 0)}
           </p>
           <p className="text-xs text-slate-400 mt-1">
@@ -153,7 +153,7 @@ export default function DividasPage() {
             Comprometimento da Renda Mensal
           </span>
           <p
-            className={`text-2xl font-black mt-2 ${
+            className={`text-xl sm:text-2xl font-black mt-2 ${
               pctComprometimento > 30
                 ? 'text-rose-500'
                 : pctComprometimento > 20
@@ -178,7 +178,7 @@ export default function DividasPage() {
           </div>
         </div>
 
-        <div className="glass-card p-5 rounded-2xl border border-[#ea2a33]/30 bg-gradient-to-r from-[#4a0404]/40 to-[#050505] flex flex-col justify-between">
+        <div className="col-span-2 md:col-span-1 glass-card p-5 rounded-2xl border border-[#ea2a33]/30 bg-gradient-to-r from-[#4a0404]/40 to-[#050505] flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-1.5 text-xs font-bold text-[#ea2a33]">
               <ShieldAlert className="h-4 w-4" /> Diagnóstico de Orçamento
@@ -344,8 +344,8 @@ export default function DividasPage() {
 
       {/* Modal Cadastro / Edição */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/80 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-lg rounded-2xl p-6 border border-white/10 shadow-2xl">
+        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:p-4 bg-[#050505]/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-card w-full md:max-w-lg rounded-t-3xl md:rounded-2xl p-5 sm:p-6 pb-safe border border-white/10 shadow-2xl overflow-y-auto overscroll-contain max-h-[92vh] animate-sheet-up md:animate-fade-in">
             <h2 className="text-lg font-bold text-white mb-4">
               {editingItem?.cdDivida ? 'Editar Dívida' : 'Nova Dívida'}
             </h2>

@@ -191,12 +191,12 @@ export default function PixParceladoPage() {
       />
 
       {/* KPIs */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-8">
-        <div className="glass-card p-5 rounded-2xl border border-white/10">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 mb-6 sm:mb-8">
+        <div className="glass-card p-4 sm:p-5 rounded-2xl border border-white/10">
           <span className="text-xs font-semibold uppercase text-[#94a3b8]">
             Total Parcelado (c/ juros)
           </span>
-          <p className="text-2xl font-black text-white mt-2">
+          <p className="text-xl sm:text-2xl font-black text-white mt-2">
             {formatCurrency(resumo?.vlTotalParcelado || 0)}
           </p>
           <p className="text-xs text-slate-400 mt-1">
@@ -208,7 +208,7 @@ export default function PixParceladoPage() {
           <span className="text-xs font-semibold uppercase text-[#94a3b8]">
             Restante a Pagar
           </span>
-          <p className="text-2xl font-black text-rose-400 mt-2">
+          <p className="text-xl sm:text-2xl font-black text-rose-400 mt-2">
             {formatCurrency(resumo?.vlRestante || 0)}
           </p>
           <p className="text-xs text-slate-400 mt-1">Somatório das parcelas em aberto</p>
@@ -218,7 +218,7 @@ export default function PixParceladoPage() {
           <span className="text-xs font-semibold uppercase text-[#94a3b8] flex items-center gap-1.5">
             <Wallet className="h-3.5 w-3.5" /> Parcela Mensal
           </span>
-          <p className="text-2xl font-black text-amber-400 mt-2">
+          <p className="text-xl sm:text-2xl font-black text-amber-400 mt-2">
             {formatCurrency(resumo?.vlParcelaMensal || 0)}
           </p>
           <p className="text-xs text-slate-400 mt-1">Impacto no orçamento deste mês</p>
@@ -229,7 +229,7 @@ export default function PixParceladoPage() {
             <span className="text-xs font-bold uppercase text-[#ea2a33] flex items-center gap-1.5">
               <TrendingUp className="h-3.5 w-3.5" /> Juros Totais Pagos
             </span>
-            <p className="text-2xl font-black text-white mt-2">
+            <p className="text-xl sm:text-2xl font-black text-white mt-2">
               {formatCurrency(resumo?.vlJurosTotal || 0)}
             </p>
           </div>
@@ -407,8 +407,8 @@ export default function PixParceladoPage() {
 
       {/* Modal */}
       {modalOpen && editingItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/80 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-lg rounded-2xl p-6 border border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:p-4 bg-[#050505]/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-card w-full md:max-w-lg rounded-t-3xl md:rounded-2xl p-5 sm:p-6 pb-safe border border-white/10 shadow-2xl overflow-y-auto overscroll-contain max-h-[92vh] animate-sheet-up md:animate-fade-in">
             <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
               <Landmark className="h-5 w-5 text-[#ea2a33]" />
               {editingItem.cdPixParcelado ? 'Editar Compra Parcelada' : 'Nova Compra via Pix Parcelado'}

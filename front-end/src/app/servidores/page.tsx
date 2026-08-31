@@ -280,7 +280,7 @@ export default function ServidoresPage() {
       />
 
       {/* Top Banner KPI Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {/* Total Mensal em Infra */}
         <div className="glass-card rounded-2xl p-5 border border-[#ea2a33]/30 bg-gradient-to-br from-[#4a0404]/40 via-[#050505] to-[#050505] relative overflow-hidden">
           <div className="flex items-center justify-between">
@@ -289,7 +289,7 @@ export default function ServidoresPage() {
               <Server className="h-5 w-5" />
             </div>
           </div>
-          <p className="text-2xl font-black text-white mt-3">
+          <p className="text-xl sm:text-2xl font-black text-white mt-3">
             {formatCurrency(totalInfraMensal)}
             <span className="text-xs font-medium text-[#94a3b8]"> /mês</span>
           </p>
@@ -307,7 +307,7 @@ export default function ServidoresPage() {
               <Activity className="h-5 w-5" />
             </div>
           </div>
-          <p className="text-2xl font-black text-white mt-3">
+          <p className="text-xl sm:text-2xl font-black text-white mt-3">
             {servidoresAtivosCount}{' '}
             <span className="text-xs font-normal text-[#94a3b8]">/ {servidores.length} totais</span>
           </p>
@@ -325,7 +325,7 @@ export default function ServidoresPage() {
               <CreditCard className="h-5 w-5" />
             </div>
           </div>
-          <p className="text-2xl font-black text-white mt-3">{servidoresComCartao.length}</p>
+          <p className="text-xl sm:text-2xl font-black text-white mt-3">{servidoresComCartao.length}</p>
           <p className="text-[11px] text-slate-400 mt-2 truncate">
             {cartoes.length > 0 ? `${cartoes.length} cartão(ões) cadastrados` : 'Pronto para vincular cartões'}
           </p>

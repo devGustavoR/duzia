@@ -81,13 +81,13 @@ export default function HistoricoPagosPage() {
       />
 
       {/* Metric Cards Banner */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5 mb-6 sm:mb-8">
         <div className="glass-card p-5 rounded-2xl border border-white/10 flex items-center justify-between">
           <div>
             <span className="text-xs font-semibold uppercase text-[#94a3b8]">
               Total Quitado no Mês
             </span>
-            <p className="text-2xl font-black text-emerald-400 mt-1">
+            <p className="text-xl sm:text-2xl font-black text-emerald-400 mt-1">
               {formatCurrency(totalPagoMes)}
             </p>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -104,7 +104,7 @@ export default function HistoricoPagosPage() {
             <span className="text-xs font-semibold uppercase text-[#94a3b8]">
               Comprovantes Anexados
             </span>
-            <p className="text-2xl font-black text-white mt-1">
+            <p className="text-xl sm:text-2xl font-black text-white mt-1">
               {comComprovanteCount}{' '}
               <span className="text-xs font-normal text-slate-400">
                 de {filteredItems.length}
@@ -124,7 +124,7 @@ export default function HistoricoPagosPage() {
             <span className="text-xs font-semibold uppercase text-[#94a3b8]">
               Sem Comprovante
             </span>
-            <p className="text-2xl font-black text-amber-400 mt-1">
+            <p className="text-xl sm:text-2xl font-black text-amber-400 mt-1">
               {filteredItems.length - comComprovanteCount}
             </p>
             <p className="text-xs text-amber-400/80 mt-0.5">

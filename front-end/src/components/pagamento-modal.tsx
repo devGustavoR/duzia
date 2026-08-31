@@ -99,8 +99,11 @@ export function PagamentoModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/85 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="glass-card w-full max-w-md rounded-2xl p-6 border border-white/10 shadow-2xl relative bg-[#050505]">
+    <div className="fixed inset-0 z-[60] flex items-end justify-center md:items-center md:p-4 bg-[#050505]/85 backdrop-blur-sm animate-fade-in">
+      <div className="w-full md:max-w-md max-h-[92vh] overflow-y-auto overscroll-contain rounded-t-3xl md:rounded-2xl p-5 sm:p-6 pb-safe border border-white/10 shadow-2xl relative bg-[#0b0b0d] animate-sheet-up md:animate-fade-in">
+        <div className="md:hidden flex justify-center pb-3">
+          <span className="h-1.5 w-10 rounded-full bg-white/20" />
+        </div>
         <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
           <div className="flex items-center gap-2">
             <div className="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">

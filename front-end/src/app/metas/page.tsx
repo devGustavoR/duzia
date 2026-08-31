@@ -251,8 +251,8 @@ export default function MetasPage() {
 
       {/* Modal Cadastro / Edição */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/80 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-lg rounded-2xl p-6 border border-white/10 shadow-2xl">
+        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:p-4 bg-[#050505]/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-card w-full md:max-w-lg rounded-t-3xl md:rounded-2xl p-5 sm:p-6 pb-safe border border-white/10 shadow-2xl overflow-y-auto overscroll-contain max-h-[92vh] animate-sheet-up md:animate-fade-in">
             <h2 className="text-lg font-bold text-white mb-4">
               {editingMeta?.cdMeta ? 'Editar Meta' : 'Nova Meta de Compra'}
             </h2>
@@ -352,7 +352,7 @@ export default function MetasPage() {
 
       {/* Modal Guardar Dinheiro / Aporte */}
       {aporteModalOpen && targetMeta && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/80 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:p-4 bg-[#050505]/80 backdrop-blur-sm animate-fade-in">
           <div className="glass-card w-full max-w-sm rounded-2xl p-6 border border-white/10 shadow-2xl">
             <h2 className="text-lg font-bold text-white mb-1">
               Guardar Dinheiro

@@ -94,15 +94,53 @@ export default function DashboardPage() {
       />
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 animate-pulse">
-          <div className="h-32 bg-white/5 rounded-2xl border border-white/10"></div>
-          <div className="h-32 bg-white/5 rounded-2xl border border-white/10"></div>
-          <div className="h-32 bg-white/5 rounded-2xl border border-white/10"></div>
+        <div className="space-y-5 animate-pulse">
+          <div className="h-44 bg-white/5 rounded-3xl border border-white/10"></div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="h-20 bg-white/5 rounded-2xl border border-white/10"></div>
+            <div className="h-20 bg-white/5 rounded-2xl border border-white/10"></div>
+            <div className="h-20 bg-white/5 rounded-2xl border border-white/10"></div>
+          </div>
         </div>
       ) : data ? (
-        <div className="space-y-8">
-          {/* KPI Summary Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="space-y-6 sm:space-y-8">
+          {/* ── Hero: Pendente do mês (mobile-first) ── */}
+          <div className="sm:hidden">
+            <div className="rounded-3xl p-6 border border-[#ea2a33]/30 bg-gradient-to-br from-[#4a0404]/70 via-[#1a0606] to-[#050505] relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-rose-300/90">
+                  Pendente do mês
+                </span>
+                <div className="p-2 rounded-xl bg-[#ea2a33]/20 text-[#ea2a33] border border-[#ea2a33]/30">
+                  <AlertCircle className="h-4 w-4" />
+                </div>
+              </div>
+              <p className="text-4xl font-black text-white mt-2 tracking-tight">
+                {formatCurrency(data.resumoMes.totalPendente)}
+              </p>
+              <p className="text-xs text-rose-200/70 mt-1">
+                {data.resumoMes.qtdPendente} conta(s) a vencer de {data.resumoMes.totalItens}
+              </p>
+
+              <div className="w-full bg-black/30 rounded-full h-2 mt-4 overflow-hidden">
+                <div
+                  className="bg-gradient-to-r from-[#ea2a33] to-emerald-400 h-full rounded-full transition-all duration-500"
+                  style={{ width: `${Math.min(100, data.resumoMes.percentualPago)}%` }}
+                />
+              </div>
+              <div className="flex justify-between text-[11px] font-semibold mt-2">
+                <span className="text-emerald-400">
+                  {formatCurrency(data.resumoMes.totalPago)} pago
+                </span>
+                <span className="text-slate-400">
+                  {data.resumoMes.percentualPago}% · total {formatCurrency(data.resumoMes.totalEsperado)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* KPI Summary Cards (>= sm keeps the 4-up grid) */}
+          <div className="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-5">
             {/* Total a Pagar */}
             <div className="glass-card glass-card-hover p-5 rounded-2xl relative overflow-hidden">
               <div className="flex items-center justify-between">
@@ -180,9 +218,9 @@ export default function DashboardPage() {
           </div>
 
           {/* Grid Principal: Próximos Vencimentos + Metas */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
             {/* Próximos 5 Vencimentos */}
-            <div className="lg:col-span-2 glass-card rounded-2xl p-6">
+            <div className="lg:col-span-2 glass-card rounded-2xl p-4 sm:p-6">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
                   <CalendarCheck className="h-5 w-5 text-[#ea2a33]" />
@@ -207,48 +245,50 @@ export default function DashboardPage() {
                   {data.proximosVencimentos.map((oc) => (
                     <div
                       key={oc.cdOcorrencia}
-                      className="flex items-center justify-between p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-[#ea2a33]/40 transition-colors"
+                      className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-[#ea2a33]/40 transition-colors"
                     >
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={`text-[10px] font-bold px-2 py-1 rounded-md ${
-                            oc.tpOrigem === 'CONTA'
-                              ? 'bg-[#ea2a33]/15 text-[#ea2a33] border border-[#ea2a33]/30'
-                              : 'bg-purple-500/15 text-purple-400 border border-purple-500/30'
-                          }`}
-                        >
-                          {oc.tpOrigem}
-                        </span>
-                        <div>
-                          <p className="text-sm font-semibold text-slate-200">
-                            {oc.nmItem}
-                          </p>
-                          <p className="text-xs text-[#94a3b8]">
-                            Vence em: {formatDateBR(oc.dtVencimento)}
-                          </p>
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-start gap-3 min-w-0">
+                          <span
+                            className={`shrink-0 text-[10px] font-bold px-2 py-1 rounded-md ${
+                              oc.tpOrigem === 'CONTA'
+                                ? 'bg-[#ea2a33]/15 text-[#ea2a33] border border-[#ea2a33]/30'
+                                : 'bg-purple-500/15 text-purple-400 border border-purple-500/30'
+                            }`}
+                          >
+                            {oc.tpOrigem}
+                          </span>
+                          <div className="min-w-0">
+                            <p className="text-sm font-semibold text-slate-200 truncate">
+                              {oc.nmItem}
+                            </p>
+                            <p className="text-xs text-[#94a3b8]">
+                              Vence em {formatDateBR(oc.dtVencimento)}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm font-bold text-white">
+                        <span className="shrink-0 text-sm font-black text-white">
                           {formatCurrency(oc.vlEsperado)}
                         </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 mt-3">
+                        <button
+                          onClick={() => setSelectedOcForPayment(oc)}
+                          className="flex-1 sm:flex-none px-3 py-2 rounded-xl text-xs font-bold bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-600 hover:text-white transition-all shadow-sm"
+                        >
+                          Pagar &amp; Anexar
+                        </button>
                         {oc.dsComprovanteUrl ? (
                           <a
                             href={oc.dsComprovanteUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500 hover:text-white transition-all"
+                            className="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-xl text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500 hover:text-white transition-all"
                           >
                             <FileText className="h-3.5 w-3.5" /> Recibo
                           </a>
                         ) : null}
-                        <button
-                          onClick={() => setSelectedOcForPayment(oc)}
-                          className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-600 hover:text-white transition-all shadow-sm"
-                        >
-                          Pagar & Anexar
-                        </button>
                       </div>
                     </div>
                   ))}
@@ -257,7 +297,7 @@ export default function DashboardPage() {
             </div>
 
             {/* Metas de Compra Quick View */}
-            <div className="glass-card rounded-2xl p-6">
+            <div className="glass-card rounded-2xl p-4 sm:p-6">
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
                   <Target className="h-5 w-5 text-emerald-400" />

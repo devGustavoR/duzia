@@ -314,12 +314,12 @@ export default function EventosPage() {
           </div>
 
           {/* KPIs de projeção */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-            <div className="glass-card p-5 rounded-2xl border border-white/10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
+            <div className="glass-card p-4 sm:p-5 rounded-2xl border border-white/10">
               <span className="text-xs font-semibold uppercase text-[#94a3b8]">
                 Custo total da preparação
               </span>
-              <p className="text-2xl font-black text-white mt-2">
+              <p className="text-xl sm:text-2xl font-black text-white mt-2">
                 {formatCurrency(projecao?.custoEventoTotal || 0)}
               </p>
               <p className="text-xs text-slate-400 mt-1">
@@ -328,14 +328,14 @@ export default function EventosPage() {
             </div>
             <div className="glass-card p-5 rounded-2xl border border-white/10">
               <span className="text-xs font-semibold uppercase text-[#94a3b8]">Já gasto</span>
-              <p className="text-2xl font-black text-emerald-400 mt-2">
+              <p className="text-xl sm:text-2xl font-black text-emerald-400 mt-2">
                 {formatCurrency(projecao?.custoEventoPago || 0)}
               </p>
               <p className="text-xs text-slate-400 mt-1">Itens marcados como pagos</p>
             </div>
             <div className="glass-card p-5 rounded-2xl border border-white/10">
               <span className="text-xs font-semibold uppercase text-[#94a3b8]">Falta gastar</span>
-              <p className="text-2xl font-black text-amber-400 mt-2">
+              <p className="text-xl sm:text-2xl font-black text-amber-400 mt-2">
                 {formatCurrency(projecao?.custoEventoRestante || 0)}
               </p>
               {(projecao?.reembolsavelPendente ?? 0) > 0 && (
@@ -356,7 +356,7 @@ export default function EventosPage() {
                   <Wallet className="h-3.5 w-3.5" /> Folga após o evento
                 </span>
                 <p
-                  className={`text-2xl font-black mt-2 ${
+                  className={`text-xl sm:text-2xl font-black mt-2 ${
                     folgaNegativa ? 'text-rose-400' : 'text-emerald-400'
                   }`}
                 >
@@ -582,8 +582,8 @@ export default function EventosPage() {
 
       {/* Modal Evento */}
       {eventoModalOpen && editingEvento && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/80 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-md rounded-2xl p-6 border border-white/10 shadow-2xl">
+        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:p-4 bg-[#050505]/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-card w-full md:max-w-md rounded-t-3xl md:rounded-2xl p-5 sm:p-6 pb-safe border border-white/10 shadow-2xl overflow-y-auto overscroll-contain max-h-[92vh] animate-sheet-up md:animate-fade-in">
             <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
               <CalendarHeart className="h-5 w-5 text-[#ea2a33]" />
               {editingEvento.cdEvento ? 'Editar Evento' : 'Novo Evento'}
@@ -655,8 +655,8 @@ export default function EventosPage() {
 
       {/* Modal Item */}
       {itemModalOpen && editingItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/80 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-md rounded-2xl p-6 border border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:p-4 bg-[#050505]/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-card w-full md:max-w-md rounded-t-3xl md:rounded-2xl p-5 sm:p-6 pb-safe border border-white/10 shadow-2xl overflow-y-auto overscroll-contain max-h-[92vh] animate-sheet-up md:animate-fade-in">
             <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
               <Gift className="h-5 w-5 text-[#ea2a33]" />
               {editingItem.cdItem ? 'Editar Gasto' : 'Novo Gasto'}

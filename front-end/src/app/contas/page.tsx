@@ -164,7 +164,7 @@ export default function ContasPage() {
             <p className="text-xs font-semibold text-rose-300 uppercase tracking-wider">
               Total Real de Contas do Seu Bolso
             </p>
-            <p className="text-2xl font-black text-white mt-0.5">
+            <p className="text-xl sm:text-2xl font-black text-white mt-0.5">
               {formatCurrency(totalContas)}
               <span className="text-xs font-normal text-[#94a3b8] ml-1">/mês</span>
             </p>
@@ -232,7 +232,7 @@ export default function ContasPage() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {contas.map((item) => (
             <div
               key={item.cdConta}
@@ -280,7 +280,7 @@ export default function ContasPage() {
                   </div>
                 )}
 
-                <div className="text-2xl font-black text-white mb-2">
+                <div className="text-xl sm:text-2xl font-black text-white mb-2">
                   {formatCurrency(item.vlValor)}
                   {item.snTerceiros === 'S' && item.snReembolsado === 'S' && (
                     <span className="text-xs font-bold text-emerald-400 block mt-0.5">
@@ -330,8 +330,8 @@ export default function ContasPage() {
 
       {/* Modal Cadastro / Edição de Conta */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/80 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-lg rounded-2xl p-6 border border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:p-4 bg-[#050505]/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-card w-full md:max-w-lg rounded-t-3xl md:rounded-2xl p-5 sm:p-6 pb-safe border border-white/10 shadow-2xl overflow-y-auto overscroll-contain max-h-[92vh] animate-sheet-up md:animate-fade-in">
             <h2 className="text-lg font-bold text-white mb-4">
               {editingItem?.cdConta ? 'Editar Conta' : 'Nova Conta'}
             </h2>

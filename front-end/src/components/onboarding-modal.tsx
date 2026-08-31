@@ -46,10 +46,10 @@ export function OnboardingModal({ isOpen, onComplete }: OnboardingModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/90 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="glass-card w-full max-w-lg rounded-2xl p-6 sm:p-8 border border-[#ea2a33]/40 shadow-2xl relative overflow-hidden bg-[#050505]">
+    <div className="fixed inset-0 z-[60] flex items-end justify-center md:items-center md:p-4 bg-[#050505]/90 backdrop-blur-md animate-fade-in">
+      <div className="w-full md:max-w-lg max-h-[92vh] overflow-y-auto overscroll-contain rounded-t-3xl md:rounded-2xl p-6 sm:p-8 pb-safe border border-[#ea2a33]/40 shadow-2xl relative isolate bg-[#0b0b0d] animate-sheet-up md:animate-fade-in">
         {/* Glow de Destaque g-hub */}
-        <div className="absolute -top-20 -left-20 w-60 h-60 bg-[#ea2a33]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-20 -left-20 w-60 h-60 bg-[#ea2a33]/20 rounded-full blur-3xl pointer-events-none -z-10" />
 
         <div className="flex flex-col items-center text-center mb-6">
           <div className="h-14 w-14 rounded-2xl bg-gradient-to-tr from-[#ea2a33] via-red-500 to-rose-400 flex items-center justify-center text-white shadow-xl shadow-[#ea2a33]/30 mb-3">

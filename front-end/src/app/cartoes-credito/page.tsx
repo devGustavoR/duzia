@@ -219,12 +219,12 @@ export default function CartoesCreditoListPage() {
       />
 
       {/* Resumo de Limites Globais */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-5">
         <div className="glass-card p-5 rounded-2xl border border-white/10 flex flex-col justify-between">
           <span className="text-xs font-bold uppercase text-slate-400 flex items-center gap-1.5">
             <DollarSign className="h-4 w-4 text-[#ea2a33]" /> Limite Total Combinado
           </span>
-          <p className="text-3xl font-black text-white mt-2">{formatCurrency(totalLimite)}</p>
+          <p className="text-xl sm:text-3xl font-black text-white mt-2">{formatCurrency(totalLimite)}</p>
           <p className="text-xs text-slate-400 mt-2">Soma de {cartoes.length} cartão(ões)</p>
         </div>
 
@@ -232,7 +232,7 @@ export default function CartoesCreditoListPage() {
           <span className="text-xs font-bold uppercase text-rose-300 flex items-center gap-1.5">
             <CreditCard className="h-4 w-4 text-rose-400" /> Fatura Total Atual (Usado)
           </span>
-          <p className="text-3xl font-black text-rose-400 mt-2">{formatCurrency(totalUsado)}</p>
+          <p className="text-xl sm:text-3xl font-black text-rose-400 mt-2">{formatCurrency(totalUsado)}</p>
           <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden mt-3">
             <div
               className="bg-rose-500 h-full rounded-full transition-all"
@@ -245,7 +245,7 @@ export default function CartoesCreditoListPage() {
           <span className="text-xs font-bold uppercase text-emerald-300 flex items-center gap-1.5">
             <Zap className="h-4 w-4 text-emerald-400" /> Limite Livre Disponível
           </span>
-          <p className="text-3xl font-black text-emerald-400 mt-2">
+          <p className="text-xl sm:text-3xl font-black text-emerald-400 mt-2">
             {formatCurrency(totalDisponivel)}
           </p>
           <p className="text-xs text-emerald-300/80 mt-2">Pronto para utilizar</p>
@@ -408,8 +408,8 @@ export default function CartoesCreditoListPage() {
 
       {/* Modal Adicionar / Editar Cartão de Crédito */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/80 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-lg rounded-2xl p-6 border border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:p-4 bg-[#050505]/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-card w-full md:max-w-lg rounded-t-3xl md:rounded-2xl p-5 sm:p-6 pb-safe border border-white/10 shadow-2xl overflow-y-auto overscroll-contain max-h-[92vh] animate-sheet-up md:animate-fade-in">
             <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
               <h2 className="text-lg font-bold text-white flex items-center gap-2">
                 <CreditCard className="h-5 w-5 text-[#ea2a33]" />

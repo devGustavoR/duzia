@@ -158,7 +158,7 @@ export default function FaculdadePage() {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-xl sm:text-2xl font-black text-white">
+                  <h1 className="text-xl sm:text-xl sm:text-2xl font-black text-white">
                     {fac.nmCurso}
                   </h1>
                   <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#ea2a33]/20 text-[#ea2a33] border border-[#ea2a33]/30">
@@ -186,7 +186,7 @@ export default function FaculdadePage() {
           </div>
 
           {/* Banner Matrícula / Rematrícula + Métricas */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
             {/* Card de Matrícula */}
             <div className="glass-card p-5 rounded-2xl border border-[#ea2a33]/30 bg-gradient-to-r from-[#4a0404]/30 to-[#050505] flex flex-col justify-between md:col-span-2">
               <div className="flex items-center justify-between mb-3">
@@ -205,7 +205,7 @@ export default function FaculdadePage() {
               </div>
 
               <div>
-                <p className="text-2xl font-black text-white">
+                <p className="text-xl sm:text-2xl font-black text-white">
                   {fac.vlMatricula ? formatCurrency(fac.vlMatricula) : 'Não informada'}
                 </p>
                 {fac.dtPagamentoMatricula && (
@@ -244,7 +244,7 @@ export default function FaculdadePage() {
                 <span className="text-xs font-semibold uppercase text-[#94a3b8]">
                   Investimento Total Acumulado
                 </span>
-                <p className="text-2xl font-black text-emerald-400 mt-2">
+                <p className="text-xl sm:text-2xl font-black text-emerald-400 mt-2">
                   {formatCurrency(data.totalInvestido)}
                 </p>
               </div>
@@ -259,7 +259,7 @@ export default function FaculdadePage() {
                 <span className="text-xs font-semibold uppercase text-[#94a3b8]">
                   Mensalidades do Semestre
                 </span>
-                <p className="text-2xl font-black text-white mt-2">
+                <p className="text-xl sm:text-2xl font-black text-white mt-2">
                   {data.qtdPagas} <span className="text-xs font-normal text-slate-400">pagas</span> / {data.qtdPendentes} <span className="text-xs font-normal text-amber-400">a vencer</span>
                 </p>
               </div>
@@ -353,8 +353,8 @@ export default function FaculdadePage() {
 
       {/* Modal Registrar Matrícula */}
       {matriculaModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/80 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-md rounded-2xl p-6 border border-white/10 shadow-2xl">
+        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:p-4 bg-[#050505]/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-card w-full md:max-w-md rounded-t-3xl md:rounded-2xl p-5 sm:p-6 pb-safe border border-white/10 shadow-2xl overflow-y-auto overscroll-contain max-h-[92vh] animate-sheet-up md:animate-fade-in">
             <h2 className="text-lg font-bold text-white mb-4">
               Registrar Pagamento de Matrícula / Rematrícula
             </h2>
@@ -425,8 +425,8 @@ export default function FaculdadePage() {
 
       {/* Modal Editar Curso */}
       {editModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/80 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-lg rounded-2xl p-6 border border-white/10 shadow-2xl">
+        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:p-4 bg-[#050505]/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-card w-full md:max-w-lg rounded-t-3xl md:rounded-2xl p-5 sm:p-6 pb-safe border border-white/10 shadow-2xl overflow-y-auto overscroll-contain max-h-[92vh] animate-sheet-up md:animate-fade-in">
             <h2 className="text-lg font-bold text-white mb-4">
               Editar Dados da Faculdade
             </h2>

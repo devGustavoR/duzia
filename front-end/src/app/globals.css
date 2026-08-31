@@ -109,3 +109,62 @@ select option {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Mobile app shell
+   ───────────────────────────────────────────────────────────── */
+
+/* Safe-area helpers (notch / home indicator) */
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.h-appbar {
+  height: calc(56px + env(safe-area-inset-top));
+}
+.top-appbar {
+  top: calc(56px + env(safe-area-inset-top));
+}
+
+/* Height of the bottom tab bar, used as scroll padding on <main> */
+.pb-bottomnav {
+  padding-bottom: calc(76px + env(safe-area-inset-bottom));
+}
+
+/* Bottom sheet + backdrop animations */
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.animate-sheet-up {
+  animation: sheet-up 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-sheet-up,
+  .animate-fade-in {
+    animation: none;
+  }
+}
+
+/* Let sheets/scroll areas swipe without rubber-banding the page */
+.overscroll-contain {
+  overscroll-behavior: contain;
+}

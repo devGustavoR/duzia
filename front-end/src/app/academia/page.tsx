@@ -156,7 +156,7 @@ export default function AcademiaPage() {
           </div>
 
           {/* Metric Cards Banner */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-5">
             {/* Custo Real do Bolso */}
             <div className="glass-card p-5 rounded-2xl border border-white/10 flex flex-col justify-between">
               <div>
@@ -320,8 +320,8 @@ export default function AcademiaPage() {
 
       {/* Modal Editar Plano Fitness */}
       {editModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050505]/80 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-lg rounded-2xl p-6 border border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div className="fixed inset-0 z-[60] flex items-end md:items-center justify-center md:p-4 bg-[#050505]/80 backdrop-blur-sm animate-fade-in">
+          <div className="glass-card w-full md:max-w-lg rounded-t-3xl md:rounded-2xl p-5 sm:p-6 pb-safe border border-white/10 shadow-2xl overflow-y-auto overscroll-contain max-h-[92vh] animate-sheet-up md:animate-fade-in">
             <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
               <Dumbbell className="h-5 w-5 text-[#ea2a33]" /> Editar Plano Fitness, Personal & Reembolsos
             </h2>

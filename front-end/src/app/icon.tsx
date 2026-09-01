@@ -15,9 +15,11 @@ export default function Icon() {
           justifyContent: 'center',
           background: 'linear-gradient(135deg, #ea2a33 0%, #4a0404 100%)',
           color: '#fff',
-          fontSize: 300,
+          fontSize: 340,
           fontWeight: 800,
+          letterSpacing: -8,
           fontFamily: 'system-ui, sans-serif',
+          borderRadius: 96,
         }}
       >
         D

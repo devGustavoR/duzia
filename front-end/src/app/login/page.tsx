@@ -10,7 +10,6 @@ export default function LoginPage() {
   const router = useRouter();
   const supabase = createClient();
 
-  const [mode, setMode] = useState<'LOGIN' | 'SIGNUP'>('LOGIN');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -24,28 +23,15 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      if (mode === 'LOGIN') {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        if (error) throw error;
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
 
-        toast.success('Login realizado com sucesso!');
-        router.push('/');
-        router.refresh();
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-        });
-        if (error) throw error;
-
-        toast.success(
-          'Conta criada! Verifique seu e-mail para confirmação se necessário.',
-        );
-        setMode('LOGIN');
-      }
+      toast.success('Login realizado com sucesso!');
+      router.push('/');
+      router.refresh();
     } catch (err: any) {
       toast.error(err.message || 'Erro ao autenticar.');
     } finally {
@@ -71,32 +57,6 @@ export default function LoginPage() {
           <p className="text-xs text-[#94a3b8] mt-1">
             Gestão Financeira Pessoal & Avisos WhatsApp
           </p>
-        </div>
-
-        {/* Mode Selector Tabs */}
-        <div className="flex items-center gap-1 bg-white/5 border border-white/10 p-1 rounded-xl mb-6">
-          <button
-            type="button"
-            onClick={() => setMode('LOGIN')}
-            className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
-              mode === 'LOGIN'
-                ? 'bg-[#ea2a33] text-white shadow-sm shadow-[#ea2a33]/30'
-                : 'text-[#94a3b8] hover:text-white'
-            }`}
-          >
-            Entrar
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode('SIGNUP')}
-            className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${
-              mode === 'SIGNUP'
-                ? 'bg-[#ea2a33] text-white shadow-sm shadow-[#ea2a33]/30'
-                : 'text-[#94a3b8] hover:text-white'
-            }`}
-          >
-            Criar Conta
-          </button>
         </div>
 
         {/* Form */}
@@ -140,11 +100,7 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full mt-2 flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-[#ea2a33] to-rose-600 hover:from-[#d4222a] hover:to-rose-700 text-white text-xs font-extrabold shadow-lg shadow-[#ea2a33]/30 transition-all disabled:opacity-50"
           >
-            {loading
-              ? 'Processando...'
-              : mode === 'LOGIN'
-              ? 'Entrar no Duzia'
-              : 'Criar Minha Conta'}
+            {loading ? 'Processando...' : 'Entrar no Duzia'}
             <ArrowRight className="h-4 w-4" />
           </button>
         </form>

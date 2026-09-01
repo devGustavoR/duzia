@@ -45,8 +45,15 @@ export class OcorrenciasController {
     @Body('vlPago') vlPago?: number,
     @Body('dtPagamento') dtPagamento?: string,
     @Body('dsComprovanteUrl') dsComprovanteUrl?: string,
+    @Body('dsFormaPagamento') dsFormaPagamento?: string,
   ) {
-    return this.service.togglePago(id, vlPago, dtPagamento, dsComprovanteUrl);
+    return this.service.togglePago(
+      id,
+      vlPago,
+      dtPagamento,
+      dsComprovanteUrl,
+      dsFormaPagamento,
+    );
   }
 
   @Patch(':id')

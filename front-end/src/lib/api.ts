@@ -165,6 +165,7 @@ export interface Ocorrencia {
   dtVencimento: string;
   dtPagamento?: string;
   dsComprovanteUrl?: string;
+  dsFormaPagamento?: 'PIX' | 'DINHEIRO' | null;
   snPago: 'S' | 'N';
   nrDiasAviso: number;
   snAvisoAtivo: 'S' | 'N';

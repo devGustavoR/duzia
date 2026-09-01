@@ -527,19 +527,29 @@ export class OcorrenciasService implements OnModuleInit {
     vlPago?: number,
     dtPagamento?: string,
     dsComprovanteUrl?: string,
+    dsFormaPagamento?: string,
   ) {
     const oc = await this.repo.findOneByOrFail({ cdOcorrencia: id });
-    if (oc.snPago === 'S' && !dsComprovanteUrl && vlPago === undefined) {
+    if (
+      oc.snPago === 'S' &&
+      !dsComprovanteUrl &&
+      !dsFormaPagamento &&
+      vlPago === undefined
+    ) {
       oc.snPago = 'N';
       oc.vlPago = null;
       oc.dtPagamento = null;
       oc.dsComprovanteUrl = null;
+      oc.dsFormaPagamento = null;
     } else {
       oc.snPago = 'S';
       oc.vlPago = vlPago !== undefined ? vlPago : oc.vlEsperado;
       oc.dtPagamento = dtPagamento || this.formatDateISO(new Date());
       if (dsComprovanteUrl) {
         oc.dsComprovanteUrl = dsComprovanteUrl;
+      }
+      if (dsFormaPagamento) {
+        oc.dsFormaPagamento = dsFormaPagamento;
       }
     }
     return this.repo.save(oc);

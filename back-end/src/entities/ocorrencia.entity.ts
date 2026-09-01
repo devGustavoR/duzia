@@ -35,6 +35,9 @@ export class OcorrenciaEntity {
   @Column({ name: 'ds_comprovante_url', type: 'text', nullable: true })
   dsComprovanteUrl: string | null;
 
+  @Column({ name: 'ds_forma_pagamento', type: 'varchar', length: 20, nullable: true })
+  dsFormaPagamento: string | null; // 'PIX' | 'DINHEIRO' | null
+
   @Column({ name: 'sn_pago', length: 1, default: 'N' })
   snPago: string; // 'S' ou 'N'
 

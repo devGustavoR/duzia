@@ -9,11 +9,14 @@ import {
   CheckCircle2,
   X,
   Eye,
-  FileText,
   DollarSign,
   Calendar,
+  QrCode,
+  Banknote,
 } from 'lucide-react';
 import { toast } from 'sonner';
+
+type Forma = 'PIX' | 'DINHEIRO';
 
 interface PagamentoModalProps {
   ocorrencia: Ocorrencia | null;
@@ -30,6 +33,7 @@ export function PagamentoModal({
 }: PagamentoModalProps) {
   const [vlPago, setVlPago] = useState('');
   const [dtPagamento, setDtPagamento] = useState('');
+  const [forma, setForma] = useState<Forma>('PIX');
   const [comprovanteBase64, setComprovanteBase64] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -39,12 +43,15 @@ export function PagamentoModal({
       setVlPago(String(ocorrencia.vlPago || ocorrencia.vlEsperado || ''));
       const today = new Date().toISOString().split('T')[0];
       setDtPagamento(ocorrencia.dtPagamento || today);
+      setForma((ocorrencia.dsFormaPagamento as Forma) || 'PIX');
       setComprovanteBase64(ocorrencia.dsComprovanteUrl || null);
       setFileName(ocorrencia.dsComprovanteUrl ? 'Comprovante Anexado' : null);
     }
   }, [ocorrencia]);
 
   if (!isOpen || !ocorrencia) return null;
+
+  const isDinheiro = forma === 'DINHEIRO';
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -72,8 +79,8 @@ export function PagamentoModal({
       return;
     }
 
-    if (!comprovanteBase64) {
-      toast.error('Por favor, anexe o comprovante de pagamento antes de confirmar.');
+    if (!isDinheiro && !comprovanteBase64) {
+      toast.error('Anexe o comprovante do PIX/transferência, ou marque "Dinheiro em mãos".');
       return;
     }
 
@@ -84,11 +91,12 @@ export function PagamentoModal({
         body: JSON.stringify({
           vlPago: valNum,
           dtPagamento,
-          dsComprovanteUrl: comprovanteBase64,
+          dsFormaPagamento: forma,
+          dsComprovanteUrl: comprovanteBase64 || undefined,
         }),
       });
 
-      toast.success(`Pagamento e comprovante de "${ocorrencia.nmItem}" salvos com sucesso!`);
+      toast.success(`Pagamento de "${ocorrencia.nmItem}" registrado!`);
       onSuccess();
       onClose();
     } catch (err) {
@@ -158,6 +166,37 @@ export function PagamentoModal({
             </div>
           </div>
 
+          {/* Forma de pagamento */}
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
+              Forma de pagamento
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => setForma('PIX')}
+                className={`flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold border transition-all ${
+                  !isDinheiro
+                    ? 'bg-[#ea2a33] text-white border-[#ea2a33] shadow-sm shadow-[#ea2a33]/30'
+                    : 'bg-white/5 text-slate-300 border-white/10'
+                }`}
+              >
+                <QrCode className="h-4 w-4" /> PIX / Transferência
+              </button>
+              <button
+                type="button"
+                onClick={() => setForma('DINHEIRO')}
+                className={`flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold border transition-all ${
+                  isDinheiro
+                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm shadow-emerald-600/30'
+                    : 'bg-white/5 text-slate-300 border-white/10'
+                }`}
+              >
+                <Banknote className="h-4 w-4" /> Dinheiro em mãos
+              </button>
+            </div>
+          </div>
+
           {/* Helper de Desconto Flexivel */}
           <div className="text-[11px] text-[#94a3b8] bg-white/5 p-2.5 rounded-xl border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
             <span>💡 Teve desconto este mês? Altere o valor pago livremente.</span>
@@ -168,10 +207,12 @@ export function PagamentoModal({
             )}
           </div>
 
-          {/* Area de Upload de Comprovante Obrigatorio */}
+          {/* Comprovante — obrigatório só no PIX */}
           <div>
-            <label className="block text-xs font-bold text-rose-300 mb-1 flex items-center justify-between">
-              <span>Anexar Comprovante de Compra/PIX *</span>
+            <label className="mb-1 flex items-center justify-between text-xs font-bold">
+              <span className={isDinheiro ? 'text-slate-300' : 'text-rose-300'}>
+                {isDinheiro ? 'Anexar recibo (opcional)' : 'Anexar Comprovante do PIX *'}
+              </span>
               <span className="text-[10px] font-normal text-slate-400">PDF, JPG, PNG (Max 5MB)</span>
             </label>
 
@@ -206,14 +247,21 @@ export function PagamentoModal({
                 <div className="flex flex-col items-center gap-1">
                   <Upload className="h-7 w-7 text-[#ea2a33] mb-1" />
                   <p className="text-xs font-bold text-slate-200">
-                    Clique ou arraste o arquivo do comprovante aqui
+                    {isDinheiro
+                      ? 'Foto do recibo, se tiver (opcional)'
+                      : 'Clique ou arraste o comprovante do PIX'}
                   </p>
                   <p className="text-[10px] text-slate-400">
-                    Comprovante de pagamento bancário, PIX ou recibo
+                    Comprovante bancário, PIX ou recibo
                   </p>
                 </div>
               )}
             </div>
+            {isDinheiro && (
+              <p className="mt-1.5 text-[11px] text-emerald-400/90">
+                💵 Pagamento em dinheiro — o comprovante não é obrigatório.
+              </p>
+            )}
           </div>
 
           <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
@@ -229,7 +277,7 @@ export function PagamentoModal({
               disabled={loading}
               className="px-5 py-2.5 rounded-xl text-xs font-bold bg-[#ea2a33] hover:bg-[#d4222a] text-white shadow-lg shadow-[#ea2a33]/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Salvando...' : 'Confirmar e Anexar Comprovante'}
+              {loading ? 'Salvando...' : 'Confirmar Pagamento'}
             </button>
           </div>
         </form>

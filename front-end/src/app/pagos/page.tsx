@@ -180,11 +180,16 @@ export default function HistoricoPagosPage() {
                 </div>
 
                 <div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <h3 className="text-sm font-bold text-white">{item.nmItem}</h3>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white/10 text-slate-300 uppercase">
                       {item.tpOrigem}
                     </span>
+                    {item.dsFormaPagamento === 'DINHEIRO' && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                        💵 Dinheiro
+                      </span>
+                    )}
                   </div>
                   <p className="text-xs text-[#94a3b8] mt-1">
                     Pago em:{' '}

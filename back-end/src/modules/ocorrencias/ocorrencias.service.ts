@@ -31,12 +31,17 @@ export class OcorrenciasService implements OnModuleInit {
    */
   async cleanUpDuplicates(): Promise<void> {
     try {
+      // A true duplicate matches on nm_item too: ACADEMIA legitimately has
+      // several rows on the same date (mensalidade, namorada, personal), and
+      // dropping them by (tp_origem, cd_origem, dt_vencimento) alone was
+      // deleting the personal/namorada rows — payments included — on load.
       await this.repo.query(`
         DELETE FROM financeiro.tb_ocorrencia o1
         USING financeiro.tb_ocorrencia o2
         WHERE o1.tp_origem = o2.tp_origem
           AND (o1.cd_origem = o2.cd_origem OR o1.tp_origem = 'FACULDADE')
           AND o1.dt_vencimento = o2.dt_vencimento
+          AND o1.nm_item = o2.nm_item
           AND o1.cd_ocorrencia > o2.cd_ocorrencia;
       `);
 

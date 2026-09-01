@@ -74,6 +74,11 @@ export class AcademiaService {
     await this.ocorrenciasService.cleanUpDuplicates();
     const academia = await this.getAcademia();
 
+    // Keep the current + upcoming months' academia/personal/namorada
+    // occurrences in sync on every load (the daily cron only covers
+    // contas + assinaturas, so these would otherwise go stale).
+    await this.ocorrenciasService.generateForAcademia(academia);
+
     // Fetch occurrences for academia
     const rawOcorrencias = await this.ocorrenciaRepo.find({
       where: {

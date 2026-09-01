@@ -76,6 +76,10 @@ export class FaculdadeService {
     await this.ocorrenciasService.cleanUpDuplicates();
     const faculdade = await this.getFaculdade();
 
+    // Keep upcoming tuition occurrences in sync on every load (the daily
+    // cron only covers contas + assinaturas).
+    await this.ocorrenciasService.generateForFaculdade(faculdade);
+
     // Fetch occurrences for faculdade
     const rawOcorrencias = await this.ocorrenciaRepo.find({
       where: {

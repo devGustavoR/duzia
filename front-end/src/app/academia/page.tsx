@@ -210,7 +210,8 @@ export default function AcademiaPage() {
                     if (personalOc) {
                       setSelectedOcForPayment(personalOc);
                     } else {
-                      toast.error('Ocorrência do personal não encontrada.');
+                      toast.error('Lançamento do personal ainda não gerado. Atualizando...');
+                      loadData();
                     }
                   }}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-[#ea2a33] hover:bg-[#d4222a] text-white shadow-sm transition-all"
